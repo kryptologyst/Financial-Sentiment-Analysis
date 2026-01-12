@@ -1,0 +1,74 @@
+# Configuration for Financial Sentiment Analysis
+# Research/Educational Use Only - NOT FOR INVESTMENT ADVICE
+
+# Data Configuration
+data:
+  raw_data_path: "data/raw"
+  processed_data_path: "data/processed"
+  synthetic_data_size: 1000
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  
+# Model Configuration
+models:
+  vader:
+    enabled: true
+    thresholds:
+      positive: 0.1
+      negative: -0.1
+      
+  finbert:
+    enabled: true
+    model_name: "ProsusAI/finbert"
+    max_length: 512
+    batch_size: 16
+    
+  transformer:
+    enabled: true
+    model_name: "cardiffnlp/twitter-roberta-base-sentiment-latest"
+    max_length: 512
+    batch_size: 16
+    
+# Training Configuration
+training:
+  epochs: 5
+  learning_rate: 2e-5
+  weight_decay: 0.01
+  warmup_steps: 100
+  gradient_accumulation_steps: 1
+  
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - accuracy
+    - f1_macro
+    - f1_weighted
+    - precision_macro
+    - recall_macro
+    - auroc
+    - calibration_error
+    
+# Backtesting Configuration
+backtesting:
+  initial_capital: 100000
+  transaction_cost: 0.001  # 0.1% per trade
+  slippage: 0.0005  # 0.05% slippage
+  rebalance_frequency: "1D"
+  
+# Visualization Configuration
+visualization:
+  figure_size: [12, 8]
+  style: "seaborn-v0_8"
+  save_plots: true
+  plot_format: "png"
+  
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/sentiment_analysis.log"
+  
+# Reproducibility
+random_seed: 42
+deterministic: true
